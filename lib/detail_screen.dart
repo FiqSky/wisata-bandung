@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:wisatabandung/model/tourism_place.dart';
+
+var informationTextStyle = TextStyle(fontFamily: 'Oxygen');
 
 class DetailScreen extends StatelessWidget {
   final TourismPlace place;
-  DetailScreen({@required this.place});
 
-  get informationTextStyle => null;
+  DetailScreen({required this.place});
 
   @override
   Widget build(BuildContext context) {
@@ -14,24 +16,34 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+            Stack(
+              children: <Widget>[
+                Image.asset(place.imageAsset),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        FavoriteButton(),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
-              ),
+              ],
             ),
-            Image.asset(place.imageAsset),
             Container(
               margin: EdgeInsets.only(top: 16.0),
               child: Text(
@@ -110,6 +122,30 @@ class DetailScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }

@@ -3,8 +3,6 @@ import 'package:wisatabandung/detail_screen.dart';
 import 'package:wisatabandung/model/tourism_place.dart';
 
 class MainScreen extends StatelessWidget {
-  get tourismPlaceList => null;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
